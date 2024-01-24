@@ -7,9 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service("FakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
-    private String getProductUrl="https://fakestoreapi.com/products/1";
+    private String getProductUrl="https://fakestoreapi.com/products/{id}";
+    private String getAllProductsUrl="https://fakestoreapi.com/products";
     RestTemplateBuilder restTemplateBuilder;
     private static GenericProductDto convertToGenericProduct(FakeStoreProductDto fakeStoreProductDto){
         GenericProductDto genericProductDto=new GenericProductDto();
@@ -29,15 +33,24 @@ public class FakeStoreProductService implements ProductService{
     public GenericProductDto getProductById(Long id) {
         RestTemplate restTemplate=restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductDto> response=
-                restTemplate.getForEntity(getProductUrl, FakeStoreProductDto.class);
+                restTemplate.getForEntity(getProductUrl, FakeStoreProductDto.class,id);
 
 
        return convertToGenericProduct(response.getBody());
     }
 
     @Override
-    public void getAllProducts() {
-
+    public List<GenericProductDto> getAllProducts() {
+        RestTemplate restTemplate=restTemplateBuilder.build();
+        ResponseEntity<FakeStoreProductDto[]> responseEntity =
+                restTemplate.getForEntity(getAllProductsUrl,FakeStoreProductDto[].class);
+        List<FakeStoreProductDto> allProducts= List.of(responseEntity.getBody());
+        List<GenericProductDto> result =new ArrayList<>();
+        for (FakeStoreProductDto fakestoreProductDto:
+                allProducts) {
+            result.add(convertToGenericProduct(fakestoreProductDto));
+        }
+        return result;
     }
 
     @Override

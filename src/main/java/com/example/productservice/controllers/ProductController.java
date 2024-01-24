@@ -6,10 +6,12 @@ import com.example.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
-    private ProductService productService;
+    private final ProductService productService;
 
     ProductController(@Qualifier("FakeStoreProductService") ProductService productService){
         this.productService=productService;
@@ -20,7 +22,8 @@ public class ProductController {
         return productService.getProductById(id);
     }
     @GetMapping
-    public void getAllProducts(){
+    public List<GenericProductDto> getAllProducts(){
+        return productService.getAllProducts();
 
     }
     @DeleteMapping("/{id}")
