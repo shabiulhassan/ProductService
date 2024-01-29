@@ -3,8 +3,11 @@ package com.example.productservice.services;
 import com.example.productservice.dtos.FakeStoreProductDto;
 import com.example.productservice.dtos.GenericProductDto;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RequestCallback;
+import org.springframework.web.client.ResponseExtractor;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -54,19 +57,29 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public void deleteProductById(Long id) {
-
+    public GenericProductDto deleteProductById(Long id) {
+       RestTemplate restTemplate=restTemplateBuilder.build();
+        RequestCallback requestCallback =
+                restTemplate.acceptHeaderRequestCallback(FakeStoreProductDto.class);
+        ResponseExtractor<ResponseEntity<FakeStoreProductDto>> responseExtractor =
+                restTemplate.responseEntityExtractor(FakeStoreProductDto.class);
+        ResponseEntity<FakeStoreProductDto> responseEntity= restTemplate.execute(specificProductUrl, HttpMethod.DELETE, requestCallback, responseExtractor, id);
+        return convertToGenericProduct(responseEntity.getBody());
     }
 
     @Override
     public GenericProductDto createProduct(GenericProductDto genericProductDto) {
         RestTemplate restTemplate=restTemplateBuilder.build();
-        ResponseEntity<FakeStoreProductDto> responseEntity=restTemplate.postForEntity(genericProductsUrl,genericProductDto, FakeStoreProductDto.class);
+        ResponseEntity<FakeStoreProductDto> responseEntity=restTemplate.
+                postForEntity(genericProductsUrl,genericProductDto, FakeStoreProductDto.class);
         return convertToGenericProduct(responseEntity.getBody());
     }
 
     @Override
-    public void updateProductById() {
-
+    public  GenericProductDto updateProductById(Long id,GenericProductDto genericProductDto) {
+          RestTemplate restTemplate=restTemplateBuilder.build();
+          FakeStoreProductDto responseEntity=
+                  restTemplate.patchForObject(specificProductUrl,genericProductDto,FakeStoreProductDto.class,id);
+          return convertToGenericProduct(responseEntity);
     }
 }
