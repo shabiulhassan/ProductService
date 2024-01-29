@@ -10,6 +10,6 @@ public interface ProductService {
     GenericProductDto getProductById(Long id);
     List<GenericProductDto> getAllProducts();
    void deleteProductById(Long id);
-    void createProduct();
+    GenericProductDto createProduct(GenericProductDto genericProductDto);
     void updateProductById();
 }

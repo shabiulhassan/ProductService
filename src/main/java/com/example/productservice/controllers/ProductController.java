@@ -30,7 +30,9 @@ public class ProductController {
     public void deleteProductById(@PathVariable("id") Long id){
 
     }
-    public void createProduct(){
+    @PostMapping
+    public GenericProductDto createProduct(@RequestBody GenericProductDto genericProductDto){
+        return productService.createProduct(genericProductDto);
 
     }
     public void updateProductById(){
