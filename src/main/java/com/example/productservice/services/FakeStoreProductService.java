@@ -1,5 +1,6 @@
 package com.example.productservice.services;
 
+import com.example.productservice.customExceptions.ProductNotFoundException;
 import com.example.productservice.dtos.FakeStoreProductDto;
 import com.example.productservice.dtos.GenericProductDto;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -33,11 +34,13 @@ public class FakeStoreProductService implements ProductService{
         this.restTemplateBuilder=restTemplateBuilder;
     }
     @Override
-    public GenericProductDto getProductById(Long id) {
+    public GenericProductDto getProductById(Long id) throws ProductNotFoundException{
         RestTemplate restTemplate=restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductDto> response=
                 restTemplate.getForEntity(specificProductUrl, FakeStoreProductDto.class,id);
-
+        if(response.getBody()==null){
+            throw new ProductNotFoundException("Product with id: "+id+" doesn't exist");
+        }
 
        return convertToGenericProduct(response.getBody());
     }

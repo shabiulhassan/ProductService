@@ -1,5 +1,6 @@
 package com.example.productservice.controllers;
 
+import com.example.productservice.customExceptions.ProductNotFoundException;
 import com.example.productservice.dtos.FakeStoreProductDto;
 import com.example.productservice.dtos.GenericProductDto;
 import com.example.productservice.services.ProductService;
@@ -17,7 +18,7 @@ public class ProductController {
         this.productService=productService;
     }
     @GetMapping("/{id}")
-    public GenericProductDto getProductById(@PathVariable("id")  Long id){
+    public GenericProductDto getProductById(@PathVariable("id")  Long id) throws ProductNotFoundException {
 
         return productService.getProductById(id);
     }
@@ -39,5 +40,6 @@ public class ProductController {
     public GenericProductDto updateProductById(@PathVariable("id") Long id,@RequestBody GenericProductDto genericProductDto){
       return productService.updateProductById(id,genericProductDto);
     }
+
 
 }
