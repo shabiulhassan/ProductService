@@ -14,7 +14,7 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-    ProductController(@Qualifier("FakeStoreProductService") ProductService productService){
+    ProductController( ProductService productService){
         this.productService=productService;
     }
     @GetMapping("/{id}")

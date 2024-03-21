@@ -19,18 +19,18 @@ import java.util.Optional;
 @SpringBootApplication
 @EnableConfigurationProperties
 @EntityScan(basePackages = {"com.example.productservice"})
-public class ProductServiceApplication implements CommandLineRunner {
-    private final ProductRepository productRepository;
-    private final PriceRepository priceRepository;
-    private final CategoryRepository categoryRepository;
-
-    public ProductServiceApplication(ProductRepository productRepository,
-                                     PriceRepository priceRepository,
-                                     CategoryRepository categoryRepository) {
-        this.productRepository = productRepository;
-        this.priceRepository = priceRepository;
-        this.categoryRepository = categoryRepository;
-    }
+public class ProductServiceApplication  {
+//    private final ProductRepository productRepository;
+//    private final PriceRepository priceRepository;
+//    private final CategoryRepository categoryRepository;
+//
+//    public ProductServiceApplication(ProductRepository productRepository,
+//                                     PriceRepository priceRepository,
+//                                     CategoryRepository categoryRepository) {
+//        this.productRepository = productRepository;
+//        this.priceRepository = priceRepository;
+//        this.categoryRepository = categoryRepository;
+//    }
 //    private MentorRepository mentorRepository;
 //    ProductServiceApplication(MentorRepository mentorRepository){
 //
@@ -43,9 +43,9 @@ public class ProductServiceApplication implements CommandLineRunner {
         SpringApplication.run(ProductServiceApplication.class, args);
 
     }
-@Transactional
-    @Override
-    public void run(String... args) throws Exception {
+//@Transactional
+//    @Override
+//    public void run(String... args) throws Exception {
 //        Mentor mentor=new Mentor();
 //        mentor.setName("Shabi");
 //        mentor.setAvgRating(99.0);
@@ -111,5 +111,5 @@ public class ProductServiceApplication implements CommandLineRunner {
 //           System.out.println(p.getTitle());
 //        }
 
-    }
-}
+   }
+//}
