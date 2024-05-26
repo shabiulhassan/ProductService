@@ -1,5 +1,6 @@
 package com.example.productservice.models;
 
+import com.example.productservice.dtos.GenericProductDto;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -20,5 +21,13 @@ public class Product extends BaseModel{
     @ManyToOne
     @JoinColumn
     private Category category;
+    public GenericProductDto from(Product product){
+        GenericProductDto genericProductDto=new GenericProductDto();
+        genericProductDto.setTitle(product.getTitle());
+        genericProductDto.setDescription(product.getDescription());
+        genericProductDto.setPrice(product.getPrice().getValue());
+        genericProductDto.setImage(product.getImage());
+        return genericProductDto;
+    }
 
 }

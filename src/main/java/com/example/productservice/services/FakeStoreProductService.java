@@ -3,6 +3,8 @@ package com.example.productservice.services;
 import com.example.productservice.customExceptions.ProductNotFoundException;
 import com.example.productservice.dtos.FakeStoreProductDto;
 import com.example.productservice.dtos.GenericProductDto;
+import com.example.productservice.securty.JWTObject;
+import com.example.productservice.securty.TokenValidater;
 import com.example.productservice.thirdPartyClients.fakeStoreClient.FakeStoreClient;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Primary;
@@ -15,10 +17,13 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Primary
 @Service("FakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
     private FakeStoreClient fakeStoreClient;
+    private TokenValidater tokenValidater;
     private static GenericProductDto convertToGenericProduct(FakeStoreProductDto fakeStoreProductDto){
         GenericProductDto genericProductDto=new GenericProductDto();
         genericProductDto.setId(fakeStoreProductDto.getId());
@@ -29,13 +34,15 @@ public class FakeStoreProductService implements ProductService{
         genericProductDto.setTitle(fakeStoreProductDto.getTitle());
         return genericProductDto;
     }
-    FakeStoreProductService(FakeStoreClient fakeStoreClient){
+    FakeStoreProductService(FakeStoreClient fakeStoreClient,TokenValidater tokenValidater){
+        this.tokenValidater=tokenValidater;
 
         this.fakeStoreClient=fakeStoreClient;
     }
     @Override
     public GenericProductDto getProductById(Long id) throws ProductNotFoundException{
 
+      // System.out.println(authToken);
 
        return convertToGenericProduct(fakeStoreClient.getProductById(id));
     }

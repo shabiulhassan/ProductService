@@ -5,6 +5,7 @@ import com.example.productservice.dtos.FakeStoreProductDto;
 import com.example.productservice.dtos.GenericProductDto;
 import com.example.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ProductController {
         this.productService=productService;
     }
     @GetMapping("/{id}")
-    public GenericProductDto getProductById(@PathVariable("id")  Long id) throws ProductNotFoundException {
+    public GenericProductDto getProductById( @PathVariable("id")  Long id) throws ProductNotFoundException {
 
         return productService.getProductById(id);
     }

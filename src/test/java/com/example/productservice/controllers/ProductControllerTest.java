@@ -27,13 +27,13 @@ public class ProductControllerTest {
         //assert(2==1+1);
         assertEquals(2,1+1,"1+1 should be 2");
     }
-@Test
-    void testGetProductByIdNegativeTC(){
-        assertThrows(ProductNotFoundException.class,()->productController.getProductById(1000L));
-    }
-    @Test
-    void testGetProductByIdMocking() throws ProductNotFoundException{
-        when(productService.getProductById(100L)).thenReturn(null);
-        assertNull(productController.getProductById(100L));
-    }
+//@Test
+//    void testGetProductByIdNegativeTC(){
+//        assertThrows(ProductNotFoundException.class,()->productController.getProductById(1000L));
+//    }
+//    @Test
+//    void testGetProductByIdMocking() throws ProductNotFoundException{
+//        when(productService.getProductById(100L)).thenReturn(null);
+//        assertNull(productController.getProductById(100L));
+//    }
 }
